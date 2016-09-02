@@ -6,11 +6,11 @@ from xml.etree.ElementTree import ElementTree, Element, SubElement
 # Please change this variable to yours!
 unittest_data_dir = 'C:\\Users\\netov\\Documents\\Solution\\unittests-data\\'
 simple_xml = unittest_data_dir+'simplevaluation-test\simple.xml'
-long_value = unittest_data_dir + 'complexvaluation-test\long_values.xml'
+long_values = unittest_data_dir + 'complexvaluation-test\long_values.xml'
 complex_xml = unittest_data_dir + 'complexvaluation-test\complex.xml'
-float_xml = unittest_data_dir+'complexvaluation-test\/float.xml'
-negative_xml = unittest_data_dir+'complexvaluation-test\/negative.xml'
-zero_values_xml = unittest_data_dir+'complexvaluation-test\/zero_values.xml'
+float_values = unittest_data_dir + 'complexvaluation-test\/float_values.xml'
+negative_values = unittest_data_dir + 'complexvaluation-test\/negative_values.xml'
+zero_values_xml = unittest_data_dir+'complexvaluation-test\zero_values.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -90,7 +90,7 @@ class TestZeroValues(unittest.TestCase):
 class TestLongValues(unittest.TestCase):
 
     def test_long_values(self):
-        code = expr.XmlReader(long_value).parse()
+        code = expr.XmlReader(long_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 1)
@@ -131,7 +131,7 @@ class TestValuationComplex(unittest.TestCase):
 class TestNegativeValues(unittest.TestCase):
 
     def test_negative_values(self):
-        code = expr.XmlReader(negative_xml).parse()
+        code = expr.XmlReader(negative_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
@@ -148,9 +148,7 @@ class TestNegativeValues(unittest.TestCase):
 class TestFloatValues(unittest.TestCase):
 
     def test_float_valuaes(self):
-        global unittest_data_dir
-        input_file = unittest_data_dir+'complexvaluation-test\/float.xml'
-        code = expr.XmlReader(input_file).parse()
+        code = expr.XmlReader(float_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
