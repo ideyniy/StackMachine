@@ -6,7 +6,7 @@ from xml.etree.ElementTree import ElementTree, Element, SubElement
 # Please change this variable to yours!
 unittest_data_dir = 'C:\\Users\\netov\\Documents\\Solution\\unittests-data\\'
 simple_xml = unittest_data_dir+'simplevaluation-test\simple.xml'
-long_value = unittest_data_dir + 'simplevaluation-test\long_value.xml'
+long_value = unittest_data_dir + 'complexvaluation-test\long_values.xml'
 complex_xml = unittest_data_dir + 'complexvaluation-test\complex.xml'
 float_xml = unittest_data_dir+'complexvaluation-test\/float.xml'
 negative_xml = unittest_data_dir+'complexvaluation-test\/negative.xml'
@@ -20,11 +20,6 @@ class TestConvertUtils(unittest.TestCase):
     def test_to_int_non_equal(self):
         self.assertNotEqual(expr.ConvertUtils.to_int('321'), 123)
 
-    # Calculations with float
-    def test_float_to_int(self):
-        self.assertEquals(expr.ConvertUtils.to_int("2.02"), 2.02)
-
-    # Check complex tag parsed
     def test_complex_tag(self):
         code = expr.XmlReader(complex_xml).parse()
         result = 'true' in code[0]
@@ -81,9 +76,9 @@ class TestInputFiles(unittest.TestCase):
         self.assertEqual('file2.xml', files[1])
         self.assertEqual('file3.xml', files[2])
 
-class TestMultDivideZero(unittest.TestCase):
+class TestZeroValues(unittest.TestCase):
 
-    def test_zero_value(self):
+    def test_zero_values(self):
         code = expr.XmlReader(zero_values_xml).parse()
         vm = expr.Machine()
         res = vm.run(code)
@@ -92,7 +87,7 @@ class TestMultDivideZero(unittest.TestCase):
         self.assertEqual(res[1][0], 14)
         self.assertEqual(res[1][1], 0)
 
-class TestMaxInt(unittest.TestCase):
+class TestLongValues(unittest.TestCase):
 
     def test_long_values(self):
         code = expr.XmlReader(long_value).parse()
@@ -133,9 +128,9 @@ class TestValuationComplex(unittest.TestCase):
         self.assertEqual(res[4][0], 14)
         self.assertEqual(res[4][1], 6)
 
-class TestValuationComplexNegative(unittest.TestCase):
+class TestNegativeValues(unittest.TestCase):
 
-    def test_complex_negative_valuation(self):
+    def test_negative_values(self):
         code = expr.XmlReader(negative_xml).parse()
         vm = expr.Machine()
         res = vm.run(code)
@@ -150,9 +145,9 @@ class TestValuationComplexNegative(unittest.TestCase):
         self.assertEqual(res[4][0], 14)
         self.assertEqual(res[4][1], -6)
 
-class TestValuationComplexFloat(unittest.TestCase):
+class TestFloatValues(unittest.TestCase):
 
-    def test_float_valuation(self):
+    def test_float_valuaes(self):
         global unittest_data_dir
         input_file = unittest_data_dir+'complexvaluation-test\/float.xml'
         code = expr.XmlReader(input_file).parse()
