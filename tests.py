@@ -11,6 +11,7 @@ complex_xml = unittest_data_dir + 'complexvaluation-test\complex.xml'
 float_values = unittest_data_dir + 'complexvaluation-test\/float_values.xml'
 negative_values = unittest_data_dir + 'complexvaluation-test\/negative_values.xml'
 zero_values_xml = unittest_data_dir+'complexvaluation-test\zero_values.xml'
+wrong_operations = unittest_data_dir+'complexvaluation-test\wrong_operations.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -60,17 +61,14 @@ class TestConvertUtils(unittest.TestCase):
 class TestInputFiles(unittest.TestCase):
 
     def test_input_files_returns_list(self):
-        global unittest_data_dir
         files = expr.get_input_files(unittest_data_dir+'filelisting-test', '.xml', '_result')
         self.assertEqual(True, isinstance(files, list))
 
     def test_input_files_expected_error(self):
-        global unittest_data_dir
         with self.assertRaises(WindowsError):
             expr.get_input_files('UNKNOWN_DIR', '.xml', '_result')
 
     def test_input_files(self):
-        #global unittest_data_dir
         files = expr.get_input_files(unittest_data_dir+'filelisting-test', '.xml', '_result')
         self.assertEqual('file1.xml', files[0])
         self.assertEqual('file2.xml', files[1])
@@ -147,12 +145,20 @@ class TestNegativeValues(unittest.TestCase):
 
 class TestFloatValues(unittest.TestCase):
 
-    def test_float_valuaes(self):
+    def test_float_values(self):
         code = expr.XmlReader(float_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
         self.assertEqual(res[0][1], 10.01)
+
+class TestWrongOperations(unittest.TestCase):
+
+    def test_wrong_operations(self):
+        code = expr.XmlReader(wrong_operations).parse()
+        vm = expr.Machine()
+        with self.assertRaises(RuntimeError):
+            vm.run(code)
 
 if __name__ == '__main__':
     unittest.main()
