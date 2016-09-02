@@ -10,7 +10,7 @@ long_value = unittest_data_dir + 'simplevaluation-test\long_value.xml'
 complex_xml = unittest_data_dir + 'complexvaluation-test\complex.xml'
 float_xml = unittest_data_dir+'complexvaluation-test\/float.xml'
 negative_xml = unittest_data_dir+'complexvaluation-test\/negative.xml'
-zero_values_xml = unittest_data_dir+'complexvaluation-test\/multiplication_by_zero.xml'
+zero_values_xml = unittest_data_dir+'complexvaluation-test\/zero_values.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
