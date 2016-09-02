@@ -32,9 +32,9 @@ class ConvertUtils(object):
                 pass
         return value
 
-    @staticmethod
-    def to_string(stringToConvert):
-        return  str(stringToConvert)
+    # @staticmethod
+    # def to_string(stringToConvert):
+    #     return  str(stringToConvert)
 
     @staticmethod
     def data_to_xml_node(data):
@@ -113,8 +113,9 @@ class XmlReader(object):
                 sub_operation = self._elm_to_code(operand)
                 operands.append((constant, sub_operation))
             result_id = ConvertUtils.to_int(operation.attrib.get("id"))
-            complex = ConvertUtils.to_string(operation.attrib.get("complex"))
-            code.append((operation.tag, operands, result_id, complex))
+            #complex = ConvertUtils.to_string(operation.attrib.get("complex"))
+            #code.append((operation.tag, operands, result_id, complex))
+            code.append((operation.tag, operands, result_id))
         return code
 
 
