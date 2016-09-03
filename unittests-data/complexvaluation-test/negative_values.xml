@@ -23,7 +23,7 @@
 			<addition>
 				<item>2</item>
 				<item>3</item>
-				<item>4</item>
+				<item>-4</item>
 			</addition>
 		</factor>
 		<factor>6</factor>
@@ -33,7 +33,7 @@
 				<factor>4</factor>
 				<factor>5</factor>
 				<factor>10</factor>
-				<factor>56</factor>
+				<factor>-56</factor>
 			</multiplication>
 		</factor>
 	</multiplication>
