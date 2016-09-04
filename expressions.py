@@ -52,6 +52,7 @@ class Machine(object):
     def __init__(self):
         self.data_stack = deque()
         self.dispatch_map = dict(addition=int.__add__, subtraction=int.__sub__, multiplication=int.__mul__, division=int.__floordiv__)
+        self.recursion = 0
 
     def pop(self):
         return self.data_stack.pop()
@@ -64,6 +65,7 @@ class Machine(object):
                 for ins, op, res in code]
 
     def dispatch(self, op):
+        self.recursion += 1
         #print op
         if not op:
             pass

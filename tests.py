@@ -5,15 +5,20 @@ from xml.etree.ElementTree import ElementTree, Element, SubElement
 
 # Please change this variable to yours!
 unittest_data_dir = 'C:\\Users\\netov\\PycharmProjects\\untitled1\\unittests-data\\'
-simple_xml = unittest_data_dir+'simplevaluation-test\simple.xml'
-max_int = unittest_data_dir + 'complexvaluation-test\long_values.xml'
-complex_xml = unittest_data_dir + 'complexvaluation-test\complex.xml'
-float_values = unittest_data_dir + 'complexvaluation-test\/float_values.xml'
-negative_values = unittest_data_dir + 'complexvaluation-test\/negative_values.xml'
-zero_values_xml = unittest_data_dir+'complexvaluation-test\zero_values.xml'
-wrong_operations = unittest_data_dir+'complexvaluation-test\wrong_operations.xml'
-big_values = unittest_data_dir+'complexvaluation-test\/big_result.xml'
-float_in_result = unittest_data_dir+'complexvaluation-test\/big_result.xml'
+
+simple_calculations = unittest_data_dir + 'simplevaluation-test\simple_calculations.xml'
+complex_calculations = unittest_data_dir + 'complexvaluation-test\complex_2_levels.xml'
+
+#Check size of long and adjust in long_int_plus_1.xml
+long_int_plus_one = unittest_data_dir + 'simplevaluation-test\long_int_plus_1.xml'
+float_values = unittest_data_dir + 'simplevaluation-test\/float_values.xml'
+negative_values = unittest_data_dir + 'simplevaluation-test\/negative_values.xml'
+zero_values = unittest_data_dir + 'simplevaluation-test\zero_values.xml'
+misspelled_operation = unittest_data_dir+'simplevaluation-test\misspelled_operation.xml'
+long_in_result = unittest_data_dir + 'simplevaluation-test\/long_in_result.xml'
+float_in_result = unittest_data_dir+'simplevaluation-test\/float_in_result.xml'
+same_top_ids = unittest_data_dir+'simplevaluation-test\same_top_ids.xml'
+deep = unittest_data_dir+'complexvaluation-test\/complex_over_100_levels.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -24,8 +29,8 @@ class TestConvertUtils(unittest.TestCase):
         self.assertNotEqual(expr.ConvertUtils.to_int('321'), 123)
 
     #mine
-    def test_complex_tag(self):
-        code = expr.XmlReader(complex_xml).parse()
+    def test_complex_tag_exist(self):
+        code = expr.XmlReader(complex_calculations).parse()
         result = 'true' in code[0]
         self.assertTrue(result)
 
@@ -87,7 +92,7 @@ class TestInputFiles(unittest.TestCase):
 class TestValuationSimple(unittest.TestCase):
 
     def test_simple_valuation(self):
-        code = expr.XmlReader(simple_xml).parse()
+        code = expr.XmlReader(simple_calculations).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 1)
@@ -102,7 +107,7 @@ class TestValuationSimple(unittest.TestCase):
 class TestValuationComplex(unittest.TestCase):
 
     def test_complex_valuation(self):
-        code = expr.XmlReader(complex_xml).parse()
+        code = expr.XmlReader(complex_calculations).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
@@ -120,7 +125,7 @@ class TestValuationComplex(unittest.TestCase):
 class TestZeroValues(unittest.TestCase):
 
     def test_zero_values(self):
-        code = expr.XmlReader(zero_values_xml).parse()
+        code = expr.XmlReader(zero_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 13)
@@ -129,10 +134,10 @@ class TestZeroValues(unittest.TestCase):
         self.assertEqual(res[1][1], 0)
 
 #mine
-class TestMaxINT(unittest.TestCase):
+class TestLongIntPlusOne(unittest.TestCase):
 
-    def test_max_int(self):
-        code = expr.XmlReader(max_int).parse()
+    def test_long_int_plus_1(self):
+        code = expr.XmlReader(long_int_plus_one).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 1)
@@ -157,33 +162,34 @@ class TestNegativeValues(unittest.TestCase):
         self.assertEqual(res[4][1], -6)
 
 #mine
-class TestFloatValues(unittest.TestCase):
+class TestFloatCalculated(unittest.TestCase):
 
-    def test_float_values(self):
+    def test_float_calculated(self):
         code = expr.XmlReader(float_values).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
-        self.assertEqual(res[0][1], 10.01)
+        self.assertEqual(res[0][1], 10)
 
 #mine
-class TestWrongOperations(unittest.TestCase):
+class TestMisspelledOperation(unittest.TestCase):
 
-    def test_wrong_operations(self):
-        code = expr.XmlReader(wrong_operations).parse()
+    def test_misspelled_operation(self):
+        code = expr.XmlReader(misspelled_operation).parse()
         vm = expr.Machine()
         with self.assertRaises(RuntimeError):
             vm.run(code)
 
 #mine
-class TestBigResultCalculated(unittest.TestCase):
+class TestLongInResult(unittest.TestCase):
 
-    def test_big_result_calculated(self):
-        code = expr.XmlReader(big_values).parse()
+    def test_long_in_result(self):
+        code = expr.XmlReader(long_in_result).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 1)
         self.assertEqual(res[0][1], 729000000000000L)
+
 
 #mine
 class TestFloatInResult(unittest.TestCase):
@@ -192,8 +198,30 @@ class TestFloatInResult(unittest.TestCase):
         code = expr.XmlReader(float_in_result).parse()
         vm = expr.Machine()
         res = vm.run(code)
-        self.assertEqual(res[0][0], 1)
+        self.assertEqual(res[0][0], 14)
         self.assertEqual(res[0][1], 3.5)
+
+
+#mine
+class TestSameTopIDs(unittest.TestCase):
+
+    def test_same_top_ids(self):
+        code = expr.XmlReader(same_top_ids).parse()
+        vm = expr.Machine()
+        res = vm.run(code)
+        self.assertEqual(res[0][0], 10)
+        self.assertEqual(res[0][1], 9)
+        self.assertEqual(res[1][0], 10)
+        self.assertEqual(res[1][1], 5)
+
+
+#mine
+class TestDeepness(unittest.TestCase):
+
+    def test_deepness(self):
+        code = expr.XmlReader(deep).parse()
+        vm = expr.Machine()
+        vm.run(code)
 
 if __name__ == '__main__':
     unittest.main()

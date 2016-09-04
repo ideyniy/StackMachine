@@ -1,29 +1,29 @@
 <expressions>
-	<addition id="10" complex="true">
-		<item>2.99</item>
+	<addition id="10">
+		<item>-4</item>
 		<item>3</item>
 		<item>
 			<subtraction>
-				<minuend>7.01</minuend>
-				<subtrahend>3</subtrahend>
+				<minuend>-7</minuend>
+				<subtrahend>-3</subtrahend>
 			</subtraction>
 		</item>
 	</addition>
 	<subtraction id="11">
 		<minuend>3</minuend>
-		<subtrahend>2</subtrahend>
+		<subtrahend>-2</subtrahend>
 	</subtraction>
 	<multiplication id="12">
-		<factor>5</factor>
+		<factor>1</factor>
 		<factor>6</factor>
-		<factor>8</factor>
+		<factor>-8</factor>
 	</multiplication>
-	<multiplication id="13" complex="true">
+	<multiplication id="13">
 		<factor>
 			<addition>
 				<item>2</item>
 				<item>3</item>
-				<item>4</item>
+				<item>-4</item>
 			</addition>
 		</factor>
 		<factor>6</factor>
@@ -33,12 +33,12 @@
 				<factor>4</factor>
 				<factor>5</factor>
 				<factor>10</factor>
-				<factor>56</factor>
+				<factor>-56</factor>
 			</multiplication>
 		</factor>
 	</multiplication>
-	<division id="14" complex="true">
-		<dividend>54</dividend>
+	<division id="14">
+		<dividend>-54</dividend>
 		<divisor>
 			<addition>
 				<item>3</item>
