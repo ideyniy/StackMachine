@@ -20,6 +20,7 @@ float_in_result = unittest_data_dir+'simplevaluation-test\/float_in_result.xml'
 same_top_ids = unittest_data_dir+'simplevaluation-test\same_top_ids.xml'
 operations_of_operations = unittest_data_dir + 'complexvaluation-test\operations_of_operations.xml'
 hundred_enclosed_operations = unittest_data_dir + 'complexvaluation-test\/hundred_enclosed_operations.xml'
+lots_enclosed_operations = unittest_data_dir + 'complexvaluation-test\lots_enclosed_operations.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -216,6 +217,7 @@ class TestSameTopIDs(unittest.TestCase):
         self.assertEqual(res[1][0], 10)
         self.assertEqual(res[1][1], 5)
 
+#mine
 class TestOperationsOfOperations(unittest.TestCase):
 
     def test_hundred_operations_of_operations(self):
@@ -230,7 +232,13 @@ class TestOperationsOfOperations(unittest.TestCase):
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0],10)
-        self.assertEqual(res[0][1],8)
+        self.assertEqual(res[0][1],6)
+
+    def test_lots_enclosed_operations(self):
+        code = expr.XmlReader(lots_enclosed_operations).parse()
+        vm = expr.Machine()
+        res = vm.run(code)
+        print res
 
 if __name__ == '__main__':
     unittest.main()
