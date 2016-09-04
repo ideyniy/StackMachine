@@ -8,7 +8,12 @@
 		</item>
 		<item>
 			<subtraction>
-				<minuend>6</minuend>
+				<minuend>
+					<subtraction>
+						<minuend>7</minuend>
+						<subtrahend>3</subtrahend>
+					</subtraction>
+				</minuend>
 				<subtrahend>2</subtrahend>
 			</subtraction>
 		</item>
