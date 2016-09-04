@@ -7,7 +7,7 @@ from xml.etree.ElementTree import ElementTree, Element, SubElement
 unittest_data_dir = 'C:\\Users\\netov\\PycharmProjects\\untitled1\\unittests-data\\'
 
 simple_calculations = unittest_data_dir + 'simplevaluation-test\simple_calculations.xml'
-complex_calculations = unittest_data_dir + 'complexvaluation-test\complex_2_levels.xml'
+base_complex = unittest_data_dir + 'complexvaluation-test\/base_complex.xml'
 
 #Check size of long and adjust in long_int_plus_1.xml
 long_int_plus_one = unittest_data_dir + 'simplevaluation-test\long_int_plus_1.xml'
@@ -20,7 +20,7 @@ float_in_result = unittest_data_dir+'simplevaluation-test\/float_in_result.xml'
 same_top_ids = unittest_data_dir+'simplevaluation-test\same_top_ids.xml'
 operations_of_operations = unittest_data_dir + 'complexvaluation-test\operations_of_operations.xml'
 hundred_enclosed_operations = unittest_data_dir + 'complexvaluation-test\/hundred_enclosed_operations.xml'
-lots_enclosed_operations = unittest_data_dir + 'complexvaluation-test\lots_enclosed_operations.xml'
+recursion_depth = unittest_data_dir + 'complexvaluation-test\/recursion_depth.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -29,12 +29,6 @@ class TestConvertUtils(unittest.TestCase):
 
     def test_to_int_non_equal(self):
         self.assertNotEqual(expr.ConvertUtils.to_int('321'), 123)
-
-    #mine
-    def test_complex_tag_exist(self):
-        code = expr.XmlReader(complex_calculations).parse()
-        result = 'true' in code[0]
-        self.assertTrue(result)
 
     def test_to_int_expect_value_error_exception(self):
         with self.assertRaises(ValueError):
@@ -67,13 +61,19 @@ class TestConvertUtils(unittest.TestCase):
         self.assertEqual('3', children[1].get("id"))
         self.assertEqual('5', children[2].get("id"))
 
-    #mine
+    #check if 'complex' tag parsed
+    def test_complex_tag_exist(self):
+        code = expr.XmlReader(base_complex).parse()
+        result = 'true' in code[0]
+        self.assertTrue(result)
+
+
+    #check that incorrect path set as output.
     def test_xml_writer_to_wrong_folder(self):
         output_dir = "1"
         data = [(1, 9), (2, 1), (3, 240), (4, 6)]
-        with self.assertRaises(IOError):
-            writer = expr.XmlWriter("", output_dir)
-            writer.write(data)
+        writer = expr.XmlWriter("", output_dir)
+        self.assertTrue(writer.file_name == '_result.xml')
 
 class TestInputFiles(unittest.TestCase):
 
@@ -110,7 +110,7 @@ class TestValuationSimple(unittest.TestCase):
 class TestValuationComplex(unittest.TestCase):
 
     def test_complex_valuation(self):
-        code = expr.XmlReader(complex_calculations).parse()
+        code = expr.XmlReader(base_complex).parse()
         vm = expr.Machine()
         res = vm.run(code)
         self.assertEqual(res[0][0], 10)
@@ -124,7 +124,8 @@ class TestValuationComplex(unittest.TestCase):
         self.assertEqual(res[4][0], 14)
         self.assertEqual(res[4][1], 6)
 
-#mine
+
+# check calculations with zero
 class TestZeroValues(unittest.TestCase):
 
     def test_zero_values(self):
@@ -136,7 +137,7 @@ class TestZeroValues(unittest.TestCase):
         self.assertEqual(res[1][0], 14)
         self.assertEqual(res[1][1], 0)
 
-#mine
+# test long int in input
 class TestLongIntPlusOne(unittest.TestCase):
 
     def test_long_int_plus_1(self):
@@ -146,7 +147,16 @@ class TestLongIntPlusOne(unittest.TestCase):
         self.assertEqual(res[0][0], 1)
         self.assertEqual(res[0][1], 2147483649L)
 
-#mine
+# test long int in result
+class TestLongInResult(unittest.TestCase):
+    def test_long_in_result(self):
+        code = expr.XmlReader(long_in_result).parse()
+        vm = expr.Machine()
+        res = vm.run(code)
+        self.assertEqual(res[0][0], 1)
+        self.assertEqual(res[0][1], 729000000000000L)
+
+# test negative values
 class TestNegativeValues(unittest.TestCase):
 
     def test_negative_values(self):
@@ -164,8 +174,8 @@ class TestNegativeValues(unittest.TestCase):
         self.assertEqual(res[4][0], 14)
         self.assertEqual(res[4][1], -6)
 
-#mine
-class TestFloatCalculated(unittest.TestCase):
+# test float in input
+class TestFloatAsInput(unittest.TestCase):
 
     def test_float_calculated(self):
         code = expr.XmlReader(float_values).parse()
@@ -174,7 +184,7 @@ class TestFloatCalculated(unittest.TestCase):
         self.assertEqual(res[0][0], 10)
         self.assertEqual(res[0][1], 10)
 
-#mine
+# test misspelled math operations
 class TestMisspelledOperation(unittest.TestCase):
 
     def test_misspelled_operation(self):
@@ -183,18 +193,7 @@ class TestMisspelledOperation(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             vm.run(code)
 
-#mine
-class TestLongInResult(unittest.TestCase):
-
-    def test_long_in_result(self):
-        code = expr.XmlReader(long_in_result).parse()
-        vm = expr.Machine()
-        res = vm.run(code)
-        self.assertEqual(res[0][0], 1)
-        self.assertEqual(res[0][1], 729000000000000L)
-
-
-#mine
+# test float in result
 class TestFloatInResult(unittest.TestCase):
 
     def test_float_in_result(self):
@@ -205,7 +204,7 @@ class TestFloatInResult(unittest.TestCase):
         self.assertEqual(res[0][1], 3.5)
 
 
-#mine
+# test same top IDs
 class TestSameTopIDs(unittest.TestCase):
 
     def test_same_top_ids(self):
@@ -217,7 +216,7 @@ class TestSameTopIDs(unittest.TestCase):
         self.assertEqual(res[1][0], 10)
         self.assertEqual(res[1][1], 5)
 
-#mine
+# test complex operations
 class TestOperationsOfOperations(unittest.TestCase):
 
     def test_hundred_operations_of_operations(self):
@@ -235,7 +234,7 @@ class TestOperationsOfOperations(unittest.TestCase):
         self.assertEqual(res[0][1],6)
 
     def test_lots_enclosed_operations(self):
-        code = expr.XmlReader(lots_enclosed_operations).parse()
+        code = expr.XmlReader(recursion_depth).parse()
         vm = expr.Machine()
         res = vm.run(code)
         print res

@@ -120,6 +120,7 @@ class XmlWriter(object):
     """
     def __init__(self, file_name, output_dir=None):
         self.file_name = '%s_result.xml' % file_name[:-4]
+        print self.file_name
         if output_dir:
             self.file_name = join(output_dir, self.file_name)
 
