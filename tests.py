@@ -18,7 +18,8 @@ misspelled_operation = unittest_data_dir+'simplevaluation-test\misspelled_operat
 long_in_result = unittest_data_dir + 'simplevaluation-test\/long_in_result.xml'
 float_in_result = unittest_data_dir+'simplevaluation-test\/float_in_result.xml'
 same_top_ids = unittest_data_dir+'simplevaluation-test\same_top_ids.xml'
-deep = unittest_data_dir+'complexvaluation-test\/complex_over_100_levels.xml'
+operations_of_operations = unittest_data_dir + 'complexvaluation-test\operations_of_operations.xml'
+hundred_enclosed_operations = unittest_data_dir + 'complexvaluation-test\/hundred_enclosed_operations.xml'
 
 class TestConvertUtils(unittest.TestCase):
 
@@ -88,6 +89,7 @@ class TestInputFiles(unittest.TestCase):
         self.assertEqual('file1.xml', files[0])
         self.assertEqual('file2.xml', files[1])
         self.assertEqual('file3.xml', files[2])
+
 
 class TestValuationSimple(unittest.TestCase):
 
@@ -214,14 +216,21 @@ class TestSameTopIDs(unittest.TestCase):
         self.assertEqual(res[1][0], 10)
         self.assertEqual(res[1][1], 5)
 
+class TestOperationsOfOperations(unittest.TestCase):
 
-#mine
-class TestDeepness(unittest.TestCase):
-
-    def test_deepness(self):
-        code = expr.XmlReader(deep).parse()
+    def test_hundred_operations_of_operations(self):
+        code = expr.XmlReader(hundred_enclosed_operations).parse()
         vm = expr.Machine()
-        vm.run(code)
+        res = vm.run(code)
+        self.assertTrue(res[0][0],10)
+        self.assertTrue(res[0][0],200)
+
+    def test_operations_of_operations_(self):
+        code = expr.XmlReader(operations_of_operations).parse()
+        vm = expr.Machine()
+        res = vm.run(code)
+        self.assertEqual(res[0][0],10)
+        self.assertEqual(res[0][1],8)
 
 if __name__ == '__main__':
     unittest.main()

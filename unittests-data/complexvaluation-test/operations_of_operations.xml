@@ -1,0 +1,16 @@
+<expressions>
+	<addition id="10" complex="true">
+		<item>
+			<subtraction>
+				<minuend>7</minuend>
+				<subtrahend>3</subtrahend>
+			</subtraction>
+		</item>
+		<item>
+			<subtraction>
+				<minuend>6</minuend>
+				<subtrahend>2</subtrahend>
+			</subtraction>
+		</item>
+	</addition>
+</expressions>
