@@ -61,19 +61,24 @@ class TestConvertUtils(unittest.TestCase):
         self.assertEqual('3', children[1].get("id"))
         self.assertEqual('5', children[2].get("id"))
 
-    #check if 'complex' tag parsed
+    # check float to int
+    def test_float_to_int(self):
+        result = expr.ConvertUtils.to_int("2.90")
+        self.assertEqual(result,2.90)
+
+    # check if 'complex' tag parsed
     def test_complex_tag_exist(self):
         code = expr.XmlReader(base_complex).parse()
         result = 'true' in code[0]
         self.assertTrue(result)
 
-
-    #check that incorrect path set as output.
+    # check that incorrect path set as output.
     def test_xml_writer_to_wrong_folder(self):
         output_dir = "1"
         data = [(1, 9), (2, 1), (3, 240), (4, 6)]
         writer = expr.XmlWriter("", output_dir)
         self.assertTrue(writer.file_name == '_result.xml')
+
 
 class TestInputFiles(unittest.TestCase):
 
@@ -174,15 +179,6 @@ class TestNegativeValues(unittest.TestCase):
         self.assertEqual(res[4][0], 14)
         self.assertEqual(res[4][1], -6)
 
-# test float in input
-class TestFloatAsInput(unittest.TestCase):
-
-    def test_float_calculated(self):
-        code = expr.XmlReader(float_values).parse()
-        vm = expr.Machine()
-        res = vm.run(code)
-        self.assertEqual(res[0][0], 10)
-        self.assertEqual(res[0][1], 10)
 
 # test misspelled math operations
 class TestMisspelledOperation(unittest.TestCase):
