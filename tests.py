@@ -4,7 +4,7 @@ import expressions as expr
 from xml.etree.ElementTree import ElementTree, Element, SubElement
 
 # Please change this variable to yours!
-unittest_data_dir = 'C:\\Users\\netov\\PycharmProjects\\untitled1\\unittests-data\\'
+unittest_data_dir = 'D:\\StackMachine\\StackMachine\\unittests-data\\'
 
 simple_calculations = unittest_data_dir + 'simplevaluation-test\simple_calculations.xml'
 base_complex = unittest_data_dir + 'complexvaluation-test\/base_complex.xml'
@@ -62,9 +62,9 @@ class TestConvertUtils(unittest.TestCase):
         self.assertEqual('5', children[2].get("id"))
 
     # check float to int
-    def test_float_to_int(self):
-        result = expr.ConvertUtils.to_int("2.90")
-        self.assertEqual(result,2.90)
+    def test_float_values_parsed(self):
+        code = expr.XmlReader(float_values).parse()
+        self.assertEqual(code[0][1][0][0],2.90)
 
     # check if 'complex' tag parsed
     def test_complex_tag_exist(self):
@@ -78,6 +78,10 @@ class TestConvertUtils(unittest.TestCase):
         data = [(1, 9), (2, 1), (3, 240), (4, 6)]
         writer = expr.XmlWriter("", output_dir)
         self.assertTrue(writer.file_name == '_result.xml')
+
+    # check that empty values converted to 0
+    def test_empty_value_to_int(self):
+        self.assertEqual(expr.ConvertUtils.to_int(""), 0)
 
 
 class TestInputFiles(unittest.TestCase):
@@ -222,12 +226,6 @@ class TestOperationsOfOperations(unittest.TestCase):
         self.assertTrue(res[0][0],10)
         self.assertTrue(res[0][0],200)
 
-    def test_operations_of_operations_(self):
-        code = expr.XmlReader(operations_of_operations).parse()
-        vm = expr.Machine()
-        res = vm.run(code)
-        self.assertEqual(res[0][0],10)
-        self.assertEqual(res[0][1],6)
 
     def test_lots_enclosed_operations(self):
         code = expr.XmlReader(recursion_depth).parse()
