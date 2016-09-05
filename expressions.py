@@ -19,7 +19,7 @@ class ConvertUtils(object):
     def to_int(string, supress_exception=True):
         value = None
         try:
-            value = int(float(string))
+            value = int(string)
         except ValueError as valueError:
             if not supress_exception:
                 raise valueError
