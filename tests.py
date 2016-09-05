@@ -211,6 +211,15 @@ class TestComplexOperations(unittest.TestCase):
         self.assertEqual(res[0][0], 10)
         self.assertEqual(res[0][1], 221)
 
+class TestMachine(unittest.TestCase):
+
+    def test_pop_on_empty_queue(self):
+        vm = expr.Machine()
+        try:
+            vm.pop()
+        except:
+            self.fail("Error. Should not execute pop() on empty stack")
+
 if __name__ == '__main__':
     unittest.main()
 
