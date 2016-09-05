@@ -84,7 +84,7 @@ class TestXMLWriter(unittest.TestCase):
     def test_output_to_wrong_folder(self):
         output_dir = "1"
         writer = expr.XmlWriter("", output_dir)
-        self.assertTrue(writer.file_name == '_result.xml')
+        self.assertEqual(writer.file_name,'_result.xml')
 
 
 class TestInputFiles(unittest.TestCase):
