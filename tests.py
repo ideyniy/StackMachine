@@ -224,10 +224,10 @@ class TestOperationsOfOperations(unittest.TestCase):
         vm = expr.Machine()
         res = vm.run(code)
         self.assertTrue(res[0][0],10)
-        self.assertTrue(res[0][0],200)
+        self.assertEqual(res[0][1],201)
 
 
-    def test_lots_enclosed_operations(self):
+    def test_recursion_depth(self):
         code = expr.XmlReader(recursion_depth).parse()
         vm = expr.Machine()
         res = vm.run(code)
