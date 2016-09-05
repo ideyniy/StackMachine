@@ -195,7 +195,7 @@ class TestComputations(unittest.TestCase):
         self.assertEqual(res[1][1], 5)
 
 
-class TestOperationsOfOperations(unittest.TestCase):
+class TestComplexOperations(unittest.TestCase):
 
     def test_hundred_operations_of_operations(self):
         code = expr.XmlReader(hundred_enclosed_operations).parse()
