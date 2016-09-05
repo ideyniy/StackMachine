@@ -75,7 +75,6 @@ class TestConvertUtils(unittest.TestCase):
     # check that incorrect path set as output.
     def test_xml_writer_to_wrong_folder(self):
         output_dir = "1"
-        data = [(1, 9), (2, 1), (3, 240), (4, 6)]
         writer = expr.XmlWriter("", output_dir)
         self.assertTrue(writer.file_name == '_result.xml')
 
